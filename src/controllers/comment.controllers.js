@@ -59,4 +59,27 @@ const deleteComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, deleteComment, "Comment Deleted Successfully"));
 });
 
-export { getVideoComments, addComment, updateComment, deleteComment };
+const getCommentByPost = asyncHandler(async (req, res) => {
+  try {
+    const videoId = req.params.videoId;
+
+    const comments = await Comment.find({ video: videoId });
+    res.status(200).json({
+      ApiResponse: new ApiResponse(
+        true,
+        "Comment fetched successfully",
+        comments
+      ),
+    });
+  } catch (error) {
+    throw new ApiError(error.message, 500);
+  }
+});
+
+export {
+  getVideoComments,
+  addComment,
+  updateComment,
+  deleteComment,
+  getCommentByPost,
+};

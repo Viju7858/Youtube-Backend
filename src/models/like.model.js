@@ -15,8 +15,9 @@ const likeSchema = new mongoose.Schema(
       ref: "Tweet",
     },
     likedBy: {
-      type: mongoose.Schema.Tpes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      dummyVideo: "686b123456789abcd1234567",
     },
   },
   { timestamps: true }

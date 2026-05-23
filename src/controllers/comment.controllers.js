@@ -30,7 +30,7 @@ const addComment = asyncHandler(async (req, res) => {
   const newComment = await Comment.create({
     content,
     video: videoId,
-    owner: "686b123456789abcd1234567",
+    owners: ["686b123456789abcd1234567", "686b987654321abcd9876543"],
   });
 
   res.status(201).json({

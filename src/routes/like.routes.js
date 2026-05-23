@@ -1,8 +1,15 @@
 import express from "express";
-import likeVideo from "../controllers/like.controllers";
 
+import {
+  likeCount,
+  likeVideo,
+  showAllLikes,
+} from "../controllers/like.controllers.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
-router.post("/like/:videoId", likeVideo);
+router.post("/like/:videoId", verifyJWT, likeVideo);
+router.get("/likes/:videoId", verifyJWT, showAllLikes);
+router.get("/likes/:videoId/count", likeCount);
 
 export default router;

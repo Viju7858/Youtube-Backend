@@ -19,9 +19,11 @@ app.use(cookiesParser());
 // Routes import
 
 import userRouter from "./routes/user.routes.js";
+import commentRouter from "./routes/comment.routes.js";
 
 // Routes definition
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/comments", commentRouter);
 
 export { app };

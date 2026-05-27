@@ -9,7 +9,7 @@ const videoSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      required: true,
+      default: "",
     },
     title: {
       type: String,
@@ -27,7 +27,7 @@ const videoSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    iPublished: {
+    isPublished: {
       type: Boolean,
       default: true,
     },

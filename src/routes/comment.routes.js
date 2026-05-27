@@ -5,12 +5,13 @@ import {
   deleteComment,
   getVideoComments,
 } from "../controllers/comment.controllers.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/add-comment", addComment);
-router.patch("/update-comment/:commentId", updateComment);
-router.get("/get-comment/video/:videoId", getVideoComments);
-router.delete("/delete-comment/:commentId", deleteComment);
+router.route("/add-comment").post(verifyJWT, addComment);
+router.route("/update-comment/:commentId").patch(verifyJWT, updateComment);
+router.route("/get-comment/video/:videoId").get(getVideoComments);
+router.route("/delete-comment/:commentId").delete(verifyJWT, deleteComment);
 
 export default router;

@@ -7,8 +7,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const getVideoComments = asyncHandler(async (req, res) => {
   try {
     const videoId = req.params.videoId;
-
     const comments = await Comment.find({ video: videoId });
+
     res.status(200).json({
       ApiResponse: new ApiResponse(
         true,
@@ -30,12 +30,12 @@ const addComment = asyncHandler(async (req, res) => {
   const newComment = await Comment.create({
     content,
     video: videoId,
-    owners: ["686b123456789abcd1234567", "686b987654321abcd9876543"],
+    commentedBy: req.user._id,
   });
 
   res.status(201).json({
     ApiResponse: new ApiResponse(
-      true,
+      201,
       "Comment added successfully",
       newComment
     ),

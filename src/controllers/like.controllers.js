@@ -5,8 +5,9 @@ import { Like } from "../models/Like.model.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const showAllLikes = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
   const allLike = await Like.find({
-    video: "686b123456789abcd1234567",
+    video: videoId,
   }).populate("likedBy", "name email");
   res
     .status(200)
@@ -15,15 +16,14 @@ const showAllLikes = asyncHandler(async (req, res) => {
 
 const likeVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
-  const video = "686b123456789abcd1234567"; // Replace with actual video ID from request parameters
   const userId = req.user._id; // Replace with actual user ID from authentication;
 
   // Check if the user has already liked the video
-  const existingLike = await Like.findOne({ video: video, likedBy: userId });
+  const existingLike = await Like.findOne({ video: videoId, likedBy: userId });
   if (existingLike) {
     await Like.findByIdAndDelete(existingLike._id);
 
-    const totalLikes = await Like.countDocuments({ video: video });
+    const totalLikes = await Like.countDocuments({ video: videoId });
     return res
       .status(200)
       .json(
@@ -34,8 +34,8 @@ const likeVideo = asyncHandler(async (req, res) => {
         )
       );
   }
-  await Like.create({ video: video, likedBy: userId });
-  const totalLikes = await Like.countDocuments({ video: video });
+  await Like.create({ video: videoId, likedBy: userId });
+  const totalLikes = await Like.countDocuments({ video: videoId });
   res
     .status(200)
     .json(
@@ -49,8 +49,8 @@ const likeVideo = asyncHandler(async (req, res) => {
 
 const likeCount = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
-  const video = "686b123456789abcd1234567"; // Replace with actual video ID from request parameters
-  const totalLikes = await Like.countDocuments({ video: video });
+
+  const totalLikes = await Like.countDocuments({ video: videoId });
   res
     .status(200)
     .json(
